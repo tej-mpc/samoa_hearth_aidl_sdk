@@ -42,11 +42,11 @@ class MainActivity : AppCompatActivity() {
                     md5Sum = "md5Sum",
                     object : HearthDeviceSdk.CallBackInstallApp {
                         override fun onSuccess(functionName: String, success: String) {
-                            Log.i("onSuccess", "functionName $functionName  success $success")
+                            Log.i("onSuccess", "functionName $functionName  , resaon : $success")
                         }
 
                         override fun onFailure(functionName: String, message: String) {
-                            Log.i("onSuccess", "functionName $functionName  success $message")
+                            Log.i("onFailure", "functionName $functionName  , resaon :  $message")
                         }
 
                     })
