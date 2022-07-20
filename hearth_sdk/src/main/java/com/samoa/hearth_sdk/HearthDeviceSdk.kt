@@ -33,7 +33,7 @@ class HearthDeviceSdk(var context: Context) : ServiceConnection {
     fun connectToRemoteService() {
         try {
             if (context == null) {
-                Log.i("connectToRemoteService", "connectToRemoteService context Null")
+                Log.i("HearthDeviceSdk", "connectToRemoteService context Null")
                 return
             }
             val intent = Intent("aidlconnection")
@@ -124,13 +124,23 @@ class HearthDeviceSdk(var context: Context) : ServiceConnection {
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
         iRemoteService = IHearthDeviceSdk.Stub.asInterface(service)
         connected = true
-        //Log.i("onServiceConnected", "onServiceConnected")
+        Log.i("HearthDeviceSdk", "onServiceConnected")
+    }
+
+    override fun onBindingDied(name: ComponentName?) {
+        super.onBindingDied(name)
+        Log.i("HearthDeviceSdk", "onBindingDied "+name)
+    }
+
+    override fun onNullBinding(name: ComponentName?) {
+        super.onNullBinding(name)
+        Log.i("HearthDeviceSdk", "onNullBinding "+name)
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {
         iRemoteService = null
         connected = false
-        //Log.i("onServiceDisconnected", "onServiceDisconnected")
+        Log.i("HearthDeviceSdk", "onServiceDisconnected")
     }
 
 

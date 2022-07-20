@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         override fun onFailure(functionName: String, exception: Exception) {
-                            Log.i("onFailure", "functionName: $functionName  exception: ${exception}")
+                            Log.i("onFailure", "functionName: $functionName  exception: ${exception.printStackTrace()}")
                         }
 
                     })
