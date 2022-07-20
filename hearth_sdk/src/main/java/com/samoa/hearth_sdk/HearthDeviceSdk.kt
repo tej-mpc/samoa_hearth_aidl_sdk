@@ -71,7 +71,21 @@ class HearthDeviceSdk(var context: Context) : ServiceConnection {
                 }
 
                 override fun onFailure(functionName: String, message: String) {
-                    mCallBackInstallApp.onFailure(functionName, message)
+                    if(message.equals("ChecksumVerificationFailedException")) {
+                        mCallBackInstallApp.onFailure(functionName,  throw  ChecksumVerificationFailedException())
+                    }else if(message.equals("HttpDownloadingFailedException")) {
+                        mCallBackInstallApp.onFailure(functionName,  throw  HttpDownloadingFailedException())
+                    }else if(message.equals("InstallAppFailedException")) {
+                        mCallBackInstallApp.onFailure(functionName,  throw  InstallAppFailedException())
+                    }else if(message.equals("InstallOtaFailedException")) {
+                        mCallBackInstallApp.onFailure(functionName,  throw  InstallOtaFailedException())
+                    }else if(message.equals("InternetConnectionException")) {
+                        mCallBackInstallApp.onFailure(functionName,  throw  InternetConnectionException())
+                    }else if(message.equals("PackageVersionVerificationFailedException")) {
+                        mCallBackInstallApp.onFailure(functionName,  throw  PackageVersionVerificationFailedException())
+                    }else{
+                        mCallBackInstallApp.onFailure(functionName,  throw  Exception(message))
+                    }
                 }
             }
         )
@@ -87,7 +101,21 @@ class HearthDeviceSdk(var context: Context) : ServiceConnection {
                 }
 
                 override fun onFailure(functionName: String, message: String) {
-                    mCallBackInstallApp.onFailure(functionName, message)
+                    if(message.equals("ChecksumVerificationFailedException")) {
+                        mCallBackInstallApp.onFailure(functionName,  throw  ChecksumVerificationFailedException())
+                    }else if(message.equals("HttpDownloadingFailedException")) {
+                        mCallBackInstallApp.onFailure(functionName,  throw  HttpDownloadingFailedException())
+                    }else if(message.equals("InstallAppFailedException")) {
+                        mCallBackInstallApp.onFailure(functionName,  throw  InstallAppFailedException())
+                    }else if(message.equals("InstallOtaFailedException")) {
+                        mCallBackInstallApp.onFailure(functionName,  throw  InstallOtaFailedException())
+                    }else if(message.equals("InternetConnectionException")) {
+                        mCallBackInstallApp.onFailure(functionName,  throw  InternetConnectionException())
+                    }else if(message.equals("PackageVersionVerificationFailedException")) {
+                        mCallBackInstallApp.onFailure(functionName,  throw  PackageVersionVerificationFailedException())
+                    }else{
+                        mCallBackInstallApp.onFailure(functionName,  throw  Exception(message))
+                    }
                 }
             }
         )
@@ -108,7 +136,7 @@ class HearthDeviceSdk(var context: Context) : ServiceConnection {
 
     interface CallBackInstallApp {
         fun onSuccess(functionName: String, response: String)
-        fun onFailure(functionName: String, exception: String)
+        fun onFailure(functionName: String, exception : Exception)
     }
 
 

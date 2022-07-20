@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.samoa.hearth_sdk.HearthDeviceSdk
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     var mHearthDeviceSdk: HearthDeviceSdk? = null
@@ -42,11 +43,11 @@ class MainActivity : AppCompatActivity() {
                     md5Sum = "md5Sum",
                     object : HearthDeviceSdk.CallBackInstallApp {
                         override fun onSuccess(functionName: String, success: String) {
-                            Log.i("onSuccess", "functionName $functionName  success $success")
+                            Log.i("onSuccess", "functionName: $functionName  success: $success")
                         }
 
-                        override fun onFailure(functionName: String, message: String) {
-                            Log.i("onSuccess", "functionName $functionName  success $message")
+                        override fun onFailure(functionName: String, exception: Exception) {
+                            Log.i("onFailure", "functionName: $functionName  exception: ${exception}")
                         }
 
                     })
