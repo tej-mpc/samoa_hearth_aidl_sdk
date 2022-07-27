@@ -53,5 +53,9 @@ class MainActivity : AppCompatActivity() {
                     })
             }
         }
+        client_screen_sleep.setOnClickListener {
+            //true->screenON, false->screenOFF
+           Log.i("mHearthDeviceSdk","ScreenSleep_Status "+ mHearthDeviceSdk?.turnOnOffScreen(doTurnOn = true))
+        }
     }
 }
