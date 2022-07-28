@@ -2,6 +2,7 @@ package com.samoa.samoa_client
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -55,7 +56,11 @@ class MainActivity : AppCompatActivity() {
         }
         client_screen_sleep.setOnClickListener {
             //true->screenON, false->screenOFF
-           Log.i("mHearthDeviceSdk","ScreenSleep_Status "+ mHearthDeviceSdk?.turnOnOffScreen(doTurnOn = true))
+           Log.i("mHearthDeviceSdk","ScreenSleep_Status "+ mHearthDeviceSdk?.turnOnOffScreen(doTurnOn = false))
+            Handler().postDelayed({
+                Log.i("mHearthDeviceSdk","ScreenSleep_Status "+ mHearthDeviceSdk?.turnOnOffScreen(doTurnOn = true))
+            },20000)
         }
+
     }
 }

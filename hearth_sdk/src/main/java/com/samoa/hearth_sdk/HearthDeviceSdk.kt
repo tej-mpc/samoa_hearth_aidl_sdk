@@ -146,41 +146,51 @@ class HearthDeviceSdk(var context: Context) : ServiceConnection {
     }
 
     fun turnOnOffScreen(doTurnOn:Boolean): Boolean {
-        var currentStatueOfScreen = true
-        var output: StringBuffer? = null
-        try {
-            val proc: Process = Runtime.getRuntime().exec("su -0 dumpsys power || grep mHoldingDisplaySuspendBlocker")
-            val stdInput = BufferedReader(InputStreamReader(proc.inputStream))
+        if(Utils.isRooted()) {
+            var currentStatueOfScreen = true
+            var output: StringBuffer? = null
+            try {
+                val proc: Process = Runtime.getRuntime().exec("su -0 dumpsys power")
+                val stdInput = BufferedReader(InputStreamReader(proc.inputStream))
 
-            var read: Int
-            val buffer = CharArray(4096)
-            output = StringBuffer()
-            while (stdInput.read(buffer).also { read = it } > 0) {
-                output.append(buffer, 0, read)
-            }
-            stdInput.close()
-            val result = output.toString().split("mHoldingDisplaySuspendBlocker=").toTypedArray()
-            val result1 = result[1].split("\n").toTypedArray()
-            currentStatueOfScreen =  result1[0].toBoolean()
-            Log.i("currentStatueOfScreen", "currentStatueOfScreen: " + result1[0])
-
-            if(doTurnOn!=currentStatueOfScreen){
-                var r = -1
-                try {
-                    val proc: Process = Runtime.getRuntime().exec("su -0 input keyevent 26")
-                    r = proc.waitFor()
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                var read: Int
+                val buffer = CharArray(4096)
+                output = StringBuffer()
+                while (stdInput.read(buffer).also { read = it } > 0) {
+                    output.append(buffer, 0, read)
                 }
-                return r == 0
-            }else{
-                Log.i("currentStatueOfScreen", "currentStatueOfScreen: Screen is on Same state currently")
-            }
-            //true->screenON, false->screenOFF
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+                stdInput.close()
+                val result =
+                    output.toString().split("mHoldingDisplaySuspendBlocker=").toTypedArray()
+                val resultmHoldingDisplaySuspendBlocker = result[1].split("\n").toTypedArray()
+                currentStatueOfScreen = resultmHoldingDisplaySuspendBlocker[0].toBoolean()
+                Log.i(
+                    "currentStatueOfScreen",
+                    "currentStatueOfScreen: " + resultmHoldingDisplaySuspendBlocker[0]
+                )
 
+                if (doTurnOn != currentStatueOfScreen) {
+                    var r = -1
+                    try {
+                        val proc: Process = Runtime.getRuntime().exec("su -0 input keyevent 26")
+                        r = proc.waitFor()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    return r == 0
+                } else {
+                    Log.i(
+                        "currentStatueOfScreen",
+                        "currentStatueOfScreen: Screen is on Same state currently"
+                    )
+                }
+                //true->screenON, false->screenOFF
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }else{
+            Log.i("HearthDeviceSDK","turnOnOffScreen() device is not rooted")
+        }
         return false
     }
 
